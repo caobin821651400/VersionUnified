@@ -37,6 +37,10 @@ fun unifiedConfiguration(ex: CommonExtension<*, *, *, *>) {
     }
 }
 
+/**
+ * buildConfigField 可以在BuildConfig中定义一些静态常量，所有的module中都有
+ * @param config DefaultConfig
+ */
 fun commonDefaultConfig(config: DefaultConfig) {
     //接口地址
     config.buildConfigField("String", "BASE_URL", "\"${ProjectVersion.url}\"")

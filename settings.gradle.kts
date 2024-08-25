@@ -46,8 +46,7 @@ dependencyResolutionManagement {
     }
 }
 
-//val includeCommon = providers.gradleProperty("LIB_COMMON_IS_AAR").get()
-//val includeLeanback = providers.gradleProperty("LIB_LEANBACK_IS_AAR").get()
+//val SEARCH_IS_APP = providers.gradleProperty("SEARCH_IS_APP").get()
 
 rootProject.name = "VersionUnified"
 include(":app")

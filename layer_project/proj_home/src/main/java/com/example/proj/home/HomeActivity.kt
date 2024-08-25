@@ -12,4 +12,8 @@ import com.therouter.router.Route
 @Route(path = Router.ROUTER_HOME)
 class HomeActivity : BaseActivity(R.layout.activity_home) {
 
+    override fun initView() {
+BuildConfig.BASE_URL
+    }
+
 }
