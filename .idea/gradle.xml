@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/version-plugin" name="version-plugin">
+                <projects>
+                  <project path="$PROJECT_DIR$/version-plugin" />
+                  <project path="$PROJECT_DIR$/version-plugin/version-plugin" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/layer_base/base_util" />
+            <option value="$PROJECT_DIR$/layer_common/common_core" />
+            <option value="$PROJECT_DIR$/layer_extends/extends_ijk" />
+            <option value="$PROJECT_DIR$/layer_project/proj_home" />
+            <option value="$PROJECT_DIR$/layer_project/proj_search" />
+            <option value="$PROJECT_DIR$/version-plugin" />
+            <option value="$PROJECT_DIR$/version-plugin/version-plugin" />
+          </set>
+        </option>
+        <option name="resolveExternalAnnotations" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

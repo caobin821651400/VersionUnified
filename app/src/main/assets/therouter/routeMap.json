@@ -1,0 +1,16 @@
+[
+  {
+    "path": "router://search",
+    "className": "com.example.proj.search.SearchActivity",
+    "action": "",
+    "description": "",
+    "params": {}
+  },
+  {
+    "path": "router://home",
+    "className": "com.example.proj.home.HomeActivity",
+    "action": "",
+    "description": "",
+    "params": {}
+  }
+]
