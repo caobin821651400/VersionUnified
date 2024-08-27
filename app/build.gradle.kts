@@ -15,6 +15,16 @@ android {
         }
     }
 
+    //签名信息
+    signingConfigs {
+        create("release") {
+            storeFile = file("../app/keystore.jks")
+            storePassword = "123456"
+            keyAlias = "key0"
+            keyPassword = "123456"
+        }
+    }
+
     buildTypes {
         //可以重写，覆盖插件中定义的
         getByName("debug") {
@@ -32,6 +42,8 @@ android {
         }
     }
     flavorDimensions += listOf("version")
+
+    lint { baseline = file("lint-baseline.xml") }
 
     //打包名称
     applicationVariants.all {

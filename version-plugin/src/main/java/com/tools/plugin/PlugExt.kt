@@ -1,11 +1,53 @@
 package com.tools.plugin
 
 import ProjectVersion
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.DefaultConfig
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.api.plugins.ExtensionContainer
+import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+
+/**
+ * App配置
+ * @param ex ExtensionContainer
+ */
+fun configApp(ex: ExtensionContainer) {
+    ex.configure<ApplicationExtension> {
+        compileSdk = ProjectVersion.compileSdk
+        defaultConfig {
+            minSdk = ProjectVersion.minSdk
+            targetSdk = ProjectVersion.targetSdk
+            versionCode = ProjectVersion.versionCode
+            versionName = ProjectVersion.versionName
+            vectorDrawables.useSupportLibrary = true
+            commonDefaultConfig(this)
+        }
+        //Application和library相同的配置
+        unifiedConfiguration(this)
+    }
+}
+
+/**
+ * Library配置
+ * @param ex ExtensionContainer
+ */
+fun configLibrary(ex: ExtensionContainer) {
+    ex.configure<LibraryExtension> {
+        compileSdk = ProjectVersion.compileSdk
+        defaultConfig {
+            minSdk = ProjectVersion.minSdk
+            consumerProguardFiles("consumer-rules.pro")
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+            commonDefaultConfig(this)
+        }
+        //Application和library相同的配置
+        unifiedConfiguration(this)
+    }
+}
 
 /**
  * 统一app和lib中的公共配置项
