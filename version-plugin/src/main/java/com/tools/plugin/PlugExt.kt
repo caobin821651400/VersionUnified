@@ -12,13 +12,34 @@ import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 /**
- * App配置
+ * module以单独app进行调试，可以理解成单元测试
  * @param ex ExtensionContainer
  */
-fun configApp(ex: ExtensionContainer) {
+fun configModuleApp(ex: ExtensionContainer, appId: String?) {
+    configApp(ex, appId ?: "com.default.app", true)
+}
+
+/**
+ * 真实的app，也就是最终合并了所有module的app
+ */
+fun configRealApp(ex: ExtensionContainer) {
+    configApp(ex, null, false)
+}
+
+/**
+ * App配置
+ * @param ex ExtensionContainer
+ * @param appId String? 单独module需要指定包名
+ * @param isModuleApp Boolean 是否是module形式的app
+ */
+private fun configApp(ex: ExtensionContainer, appId: String?, isModuleApp: Boolean) {
     ex.configure<ApplicationExtension> {
         compileSdk = ProjectVersion.compileSdk
         defaultConfig {
+            //如果业务module以app形式单独运行，需要设定一个包名
+            if (applicationId != null) {
+                applicationId = appId
+            }
             minSdk = ProjectVersion.minSdk
             targetSdk = ProjectVersion.targetSdk
             versionCode = ProjectVersion.versionCode
@@ -26,6 +47,7 @@ fun configApp(ex: ExtensionContainer) {
             vectorDrawables.useSupportLibrary = true
             commonDefaultConfig(this)
         }
+        sourceSet(this, isModuleApp)
         //Application和library相同的配置
         unifiedConfiguration(this)
     }
@@ -46,6 +68,32 @@ fun configLibrary(ex: ExtensionContainer) {
         }
         //Application和library相同的配置
         unifiedConfiguration(this)
+    }
+}
+
+/**
+ * 设置资源目录
+ * @param extension ApplicationExtension
+ * @param isModuleApp Boolean
+ */
+private fun sourceSet(extension: ApplicationExtension, isModuleApp: Boolean) {
+    extension.sourceSets {
+        getByName("main") {
+            if (isModuleApp) {
+                //根据实际情况设置单独module app的AndroidManifest路径
+                manifest.srcFile("src/app/AndroidManifest.xml")
+                java {
+                    srcDirs("src/app")//重点
+                    srcDirs("src/main/java")
+                }
+                res {
+                    srcDirs("src/main/res")//重点
+                    srcDirs("src/app/res")
+                }
+            } else {
+                manifest.srcFile("src/main/AndroidManifest.xml")
+            }
+        }
     }
 }
 

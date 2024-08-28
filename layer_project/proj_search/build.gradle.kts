@@ -1,5 +1,5 @@
 plugins {
-    id("version.libs")
+    id("jx.libs")
     id("com.google.devtools.ksp")
 }
 
@@ -8,7 +8,6 @@ android {
 
     defaultConfig {
     }
-
 }
 
 dependencies {

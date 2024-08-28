@@ -16,10 +16,6 @@ gradlePlugin {
             //插件完整的包名类名
             implementationClass = "com.tools.plugin.LibsBuildPlugin"
         }
-        register("VersionBuildPlugin") {
-            id = "version.libs"
-            implementationClass = "com.tools.plugin.VersionBuildPlugin"
-        }
     }
 }
 

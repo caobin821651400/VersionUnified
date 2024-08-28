@@ -17,7 +17,7 @@ class AppBuildPlugin : Plugin<Project> {
                 apply("kotlin-android")
                 apply("kotlin-parcelize")
             }
-            configApp(extensions)
+            configRealApp(extensions)
         }
     }
 }

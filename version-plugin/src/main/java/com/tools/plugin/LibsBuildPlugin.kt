@@ -1,11 +1,8 @@
 package com.tools.plugin
 
-import ProjectVersion
-import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.configure
+import org.gradle.api.plugins.PluginContainer
 
 /**
  * @author: cb
@@ -16,29 +13,51 @@ class LibsBuildPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         try {
             with(target) {
-                //配置library plugin,可以统一添加一些插件
-                plugins.apply {
-                    apply("com.android.library")
-                    apply("kotlin-android")
-                    apply("kotlin-parcelize")
+
+                var isModuleApp = false
+                try {
+                    //需要注意这里key用了module的名称+(_app)，例如：proj_search_app
+                    // 在gradle.properties定义
+                    val key = "${project.name}_app"
+                    isModuleApp = providers.gradleProperty(key).get() == "true"
+                } catch (e: Exception) {
                 }
 
-                //配置android{}，注意这里是LibraryExtension
-                extensions.configure<LibraryExtension> {
-                    compileSdk = ProjectVersion.compileSdk
-                    defaultConfig {
-                        minSdk = ProjectVersion.minSdk
-                        consumerProguardFiles("consumer-rules.pro")
-                        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                        commonDefaultConfig(this)
+                println("isApp=$isModuleApp")
+
+                //判断是否需要app单独运行
+                if (isModuleApp) {
+                    plugins.apply {
+                        apply("com.android.application")
+                        addCommonPluginContainer(this)
                     }
-                    //Application和library相同的配置
-                    unifiedConfiguration(this)
+                } else {
+                    plugins.apply {
+                        apply("com.android.library")
+                        addCommonPluginContainer(this)
+                    }
+                }
+
+                //根据不同配置，走App还是Library
+                if (isModuleApp) {
+                    configModuleApp(extensions, "${project.name}.application.id")
+                } else {
+                    configLibrary(extensions)
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+
+    /**
+     * 添加公共的插件
+     * @param pluginContainer PluginContainer
+     */
+    private fun addCommonPluginContainer(pluginContainer: PluginContainer) {
+        pluginContainer.apply("kotlin-android")
+        pluginContainer.apply("kotlin-parcelize")
     }
 }
 
