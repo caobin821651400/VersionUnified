@@ -37,7 +37,7 @@ private fun configApp(ex: ExtensionContainer, appId: String?, isModuleApp: Boole
         compileSdk = ProjectVersion.compileSdk
         defaultConfig {
             //如果业务module以app形式单独运行，需要设定一个包名
-            if (applicationId != null) {
+            if (appId != null) {
                 applicationId = appId
             }
             minSdk = ProjectVersion.minSdk
