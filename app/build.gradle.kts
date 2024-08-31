@@ -67,5 +67,14 @@ dependencies {
     androidTest()
     implementation(project(":common_core"))
     implementation(project(":proj_home"))
-    implementation(project(":proj_search"))
+
+      //根据配置切换aar和源码
+        if (ProjectVersion.moduleIsAar(project, "proj_search")) {
+            println("joker 11")
+            //aar需要自己打包放到一个目录中
+            api(group = "", name = "proj_search-release", ext = "aar")
+        } else {
+            println("joker 22")
+            implementation(project(":proj_search"))
+        }
 }

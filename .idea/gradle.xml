@@ -26,7 +26,6 @@
             <option value="$PROJECT_DIR$/layer_common/common_core" />
             <option value="$PROJECT_DIR$/layer_extends/extends_ijk" />
             <option value="$PROJECT_DIR$/layer_project/proj_home" />
-            <option value="$PROJECT_DIR$/layer_project/proj_search" />
             <option value="$PROJECT_DIR$/version-plugin" />
             <option value="$PROJECT_DIR$/version-plugin/version-plugin" />
           </set>

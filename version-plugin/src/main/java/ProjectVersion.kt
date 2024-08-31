@@ -1,3 +1,4 @@
+import org.gradle.api.Project
 import java.util.Date
 
 /**
@@ -35,5 +36,19 @@ object ProjectVersion {
         val date = Date()
         val dateStr = date.time
         return "$dateStr"
+    }
+
+
+    fun moduleIsAar(target: Project, key: String?): Boolean {
+        //默认取当前module的名称
+        val k = key ?: target.project.name
+        println("joker k=$k")
+        var b = false
+        try {
+            b = target.providers.gradleProperty("${k}_aar").get() == "true"
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return b
     }
 }
